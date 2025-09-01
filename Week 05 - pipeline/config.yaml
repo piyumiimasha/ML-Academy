@@ -4,6 +4,10 @@ data_paths:
   artifacts_dir: "artifacts"
   data_artifacts_dir: "artifacts/data"
   model_artifacts_dir: "artifacts/models"
+  X_train: "artifacts/data/X_train.csv"
+  y_train: "artifacts/data/y_train.csv"
+  X_test: "artifacts/data/X_test.csv"
+  y_test: "artifacts/data/y_test.csv"
 
 columns:
   target: "Exited"
