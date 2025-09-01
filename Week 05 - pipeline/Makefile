@@ -43,6 +43,7 @@ clean:
 data-pipeline:
 	@echo "Running data pipeline..."
 	@source $(VENV) && $(PYTHON) pipelines/data_pipeline.py
+	@echo "Data pipeline completed successfully!"
 
 # Run training pipeline
 train-pipeline:

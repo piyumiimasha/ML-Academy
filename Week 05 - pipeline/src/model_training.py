@@ -1,5 +1,5 @@
 import os
-import pickle
+import joblib
 
 class ModelTrainer:
     def train_simple(self, model, X_train, y_train):
@@ -9,7 +9,7 @@ class ModelTrainer:
 
     def save_model(self, model, filepath: str) -> None:
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
-        with open(filepath, 'wb') as f: pickle.dump(model, f)
+        joblib.dump(model, filepath)
 
     def load_model(self, filepath: str):
-        with open(filepath, 'rb') as f: return pickle.load(f)
+        return joblib.load(filepath)
