@@ -32,5 +32,30 @@ def training_pipeline(
     else:
         print("Loading Data Artifacts from Data Pipeline.")
 
-training_pipeline()
+    X_train = pd.read_csv(get_data_paths()['X_train'])
+    y_train = pd.read_csv(get_data_paths()['y_train'])
+    X_test = pd.read_csv(get_data_paths()['X_test'])
+    y_test = pd.read_csv(get_data_paths()['y_test'])
+
+    model_builder = XGboostModelBuilder(**model_params)
+    model = model_builder.build_model()
+
+    trainer = ModelTrainer()
+    model, train_score = trainer.train_simple(
+        model=model,
+        X_train=X_train,
+        y_train=y_train.squeeze()
+    )
+
+    print("Training Score:", train_score)
+
+if __name__ == '__main__':
+    model_config = get_model_config()
+    model_params=model_config.get('model_params')
+    print("Model Parameters:")
+    print(model_params)
+    training_pipeline(model_params=model_params)
+
+
+
     
