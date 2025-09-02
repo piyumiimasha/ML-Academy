@@ -10,7 +10,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 from model_building import XGboostModelBuilder
 from model_training import ModelTrainer
-# from model_evaluation import ModelEvaluator
+from model_evaluation import ModelEvaluator
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'utils'))
 from config import get_model_config
 logging.basicConfig(level=logging.INFO, format=
@@ -46,6 +46,11 @@ def training_pipeline(
         X_train=X_train,
         y_train=y_train.squeeze()
     )
+
+    trainer.save_model(model, model_path)
+
+    evaluator = ModelEvaluator(model, 'XGboost')
+    evaluator.evaluate(X_test, y_test)
 
     print("Training Score:", train_score)
 
