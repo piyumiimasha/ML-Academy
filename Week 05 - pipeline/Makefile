@@ -73,3 +73,20 @@ run-all:
 	@echo "\n========================================"
 	@echo "All pipelines completed successfully!"
 	@echo "========================================"
+
+
+mlflow-ui:
+	@echo "Launching MLflow UI..."
+	@echo "MLflow UI will be available at: http://localhost:$(MLFLOW_PORT)"
+	@echo "Press Ctrl+C to stop the server"
+	@source $(VENV) && mlflow ui --host 0.0.0.0 --port $(MLFLOW_PORT)
+
+# Stop all running MLflow servers
+stop-all:
+	@echo "Stopping all MLflow servers..."
+	@echo "Finding MLflow processes on port $(MLFLOW_PORT)..."
+	@-lsof -ti:$(MLFLOW_PORT) | xargs kill -9 2>/dev/null || true
+	@echo "Finding other MLflow UI processes..."
+	@-ps aux | grep '[m]lflow ui' | awk '{print $$2}' | xargs kill -9 2>/dev/null || true
+	@-ps aux | grep '[g]unicorn.*mlflow' | awk '{print $$2}' | xargs kill -9 2>/dev/null || true
+	@echo "✅ All MLflow servers have been stopped"
