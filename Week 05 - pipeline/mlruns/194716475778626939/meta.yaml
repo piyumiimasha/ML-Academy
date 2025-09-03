@@ -1,0 +1,6 @@
+artifact_location: file:///C:/Users/viraj/Zuu/Ml-academy/Week 05 - pipeline/mlruns/194716475778626939
+creation_time: 1756885937837
+experiment_id: '194716475778626939'
+last_update_time: 1756885937837
+lifecycle_stage: active
+name: churn_prediction_experiment

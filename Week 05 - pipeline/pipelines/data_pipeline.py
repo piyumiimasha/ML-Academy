@@ -4,15 +4,17 @@ import pandas as pd
 from typing import Dict
 import numpy as np
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
-from src.data_ingestion import DataIngestorCSV
-from src.handle_missing_values import DropMissingValuesStrategy, FillMissingValuesStrategy, GenderImputer
-from src.outlier_detection import OutlierDetector, IQROutlierDetection
-from src.feature_binning import CustomBinningStratergy
-from src.feature_encoding import OrdinalEncodingStratergy, NominalEncodingStrategy
-from src.feature_scaling import MinMaxScalingStratergy
-from src.data_spiltter import SimpleTrainTestSplitStratergy
+from data_ingestion import DataIngestorCSV
+from handle_missing_values import DropMissingValuesStrategy, FillMissingValuesStrategy, GenderImputer
+from outlier_detection import OutlierDetector, IQROutlierDetection
+from feature_binning import CustomBinningStratergy
+from feature_encoding import OrdinalEncodingStratergy, NominalEncodingStrategy
+from feature_scaling import MinMaxScalingStratergy
+from data_spiltter import SimpleTrainTestSplitStratergy
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'utils'))
-from utils.config import get_data_paths, get_columns, get_missing_values_config, get_outlier_config, get_binning_config, get_encoding_config, get_scaling_config, get_splitting_config
+from config import get_data_paths, get_columns, get_missing_values_config, get_outlier_config, get_binning_config, get_encoding_config, get_scaling_config, get_splitting_config
+from mlflow_utils import MLflowTracker, setup_mlflow_autolog, create_mlflow_run_tags
+import mlflow
 
 def data_pipeline(
                     data_path: str='data/raw/ChurnModelling.csv', 
@@ -28,6 +30,15 @@ def data_pipeline(
     encoding_config = get_encoding_config()
     scaling_config = get_scaling_config()
     splitting_config = get_splitting_config()
+
+    mlflow_tracker = MLflowTracker()
+    setup_mlflow_autolog()
+    run_tags = create_mlflow_run_tags('data_pipeline', {
+            'data_source': data_path,
+            'force_rebuild': str(force_rebuild),
+            'target_column': target_column
+        })
+    run = mlflow_tracker.start_run(run_name='data_pipeline', tags=run_tags)
 
 
     print('Step 1: Data Ingestion')
@@ -47,8 +58,24 @@ def data_pipeline(
         Y_train =pd.read_csv(y_train_path)
         Y_test =pd.read_csv(y_test_path)
 
+        mlflow_tracker.log_data_pipeline_metrics(
+            {
+                'total_samples': len(X_train) + len(X_test),
+                'train_samples': len(X_train),
+                'test_samples': len(X_test),
+                'x_train_path': x_train_path,
+                'x_test_path': x_test_path,
+                'y_train_path': y_train_path,
+                'y_test_path': y_test_path
+            }
+        )
+
+        mlflow_tracker.end_run()
+
     os.makedirs(data_paths['data_artifacts_dir'], exist_ok=True)
-    if not os.path.exists('temp_imputed.csv'):
+    os.makedirs(data_paths.get('processed_dir', 'data/processed'), exist_ok=True)
+    imputed_path = data_paths.get('imputed_data', 'data/processed/imputed.csv')
+    if not os.path.exists(imputed_path):
         ingestor = DataIngestorCSV()
         df = ingestor.ingest(data_path)
         print(f"loaded data shape: {df.shape}")
@@ -69,9 +96,9 @@ def data_pipeline(
         df = drop_handler.handle(df)
         df = age_handler.handle(df)
         df = gender_handler.handle(df) 
-        df.to_csv('temp_imputed.csv', index=False)
+        df.to_csv(imputed_path, index=False)
 
-    df = pd.read_csv('temp_imputed.csv')
+    df = pd.read_csv(imputed_path)
 
     print(f"data shape after imputation: {df.shape}")
 
