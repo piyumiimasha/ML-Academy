@@ -14,14 +14,14 @@ $MLFLOW_PORT = 5000
 switch ($Target) {
     "help" {
         Write-Host "Available targets:"
-        Write-Host "  .\run-pipeline.ps1 install             - Install project dependencies and set up environment"
-        Write-Host "  .\run-pipeline.ps1 data-pipeline       - Run the data pipeline"
-        Write-Host "  .\run-pipeline.ps1 train-pipeline      - Run the training pipeline"
-        Write-Host "  .\run-pipeline.ps1 streaming-inference - Run the streaming inference pipeline with the sample JSON"
-        Write-Host "  .\run-pipeline.ps1 run-all             - Run all pipelines in sequence"
-        Write-Host "  .\run-pipeline.ps1 clean               - Clean up artifacts"
-        Write-Host "  .\run-pipeline.ps1 mlflow-ui           - Launch MLflow UI"
-        Write-Host "  .\run-pipeline.ps1 stop-all            - Stop all MLflow servers"
+        Write-Host "  .\make.ps1 install             - Install project dependencies and set up environment"
+        Write-Host "  .\make.ps1 data-pipeline       - Run the data pipeline"
+        Write-Host "  .\make.ps1 train-pipeline      - Run the training pipeline"
+        Write-Host "  .\make.ps1 streaming-inference - Run the streaming inference pipeline with the sample JSON"
+        Write-Host "  .\make.ps1 run-all             - Run all pipelines in sequence"
+        Write-Host "  .\make.ps1 clean               - Clean up artifacts"
+        Write-Host "  .\make.ps1 mlflow-ui           - Launch MLflow UI"
+        Write-Host "  .\make.ps1 stop-all            - Stop all MLflow servers"
     }
     "all" {
         # Default target - call help
