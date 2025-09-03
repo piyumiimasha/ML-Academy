@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Users/viraj/Zuu/Ml-academy/Week 05 - pipeline/mlruns/225940947449008052/models/m-e7db189f8a5a4a15a53a406c19da93ce/artifacts
+creation_timestamp: 1756892091348
+experiment_id: '225940947449008052'
+last_updated_timestamp: 1756892097860
+model_id: m-e7db189f8a5a4a15a53a406c19da93ce
+model_type: null
+name: model
+source_run_id: 9bfd1af2899e488c8542fbbd5e1c1a8c
+status: 2
+status_message: null

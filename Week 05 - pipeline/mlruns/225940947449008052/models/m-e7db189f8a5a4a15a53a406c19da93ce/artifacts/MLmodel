@@ -1,0 +1,22 @@
+artifact_path: file:///C:/Users/viraj/Zuu/Ml-academy/Week 05 - pipeline/mlruns/225940947449008052/models/m-e7db189f8a5a4a15a53a406c19da93ce/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.10.3
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.1
+mlflow_version: 3.3.2
+model_id: m-e7db189f8a5a4a15a53a406c19da93ce
+model_size_bytes: 836082
+model_uuid: m-e7db189f8a5a4a15a53a406c19da93ce
+prompts: null
+run_id: 9bfd1af2899e488c8542fbbd5e1c1a8c
+utc_time_created: '2025-09-03 09:34:51.429967'

@@ -1,0 +1,18 @@
+aliases: []
+creation_timestamp: 1756892097907
+current_stage: None
+deployment_job_state: null
+description: null
+last_updated_timestamp: 1756892097907
+metrics: null
+model_id: m-e7db189f8a5a4a15a53a406c19da93ce
+name: churn_prediction
+params: null
+run_id: 9bfd1af2899e488c8542fbbd5e1c1a8c
+run_link: null
+source: models:/m-e7db189f8a5a4a15a53a406c19da93ce
+status: READY
+status_message: null
+storage_location: file:///C:/Users/viraj/Zuu/Ml-academy/Week 05 - pipeline/mlruns/225940947449008052/models/m-e7db189f8a5a4a15a53a406c19da93ce/artifacts
+user_id: null
+version: 1

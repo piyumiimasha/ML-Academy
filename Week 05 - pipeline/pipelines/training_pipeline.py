@@ -63,7 +63,7 @@ def training_pipeline(
     evaluator = ModelEvaluator(model, 'XGboost')
     evaluation_results = evaluator.evaluate(X_test, y_test)
     evaluation_results_cp = evaluation_results.copy()
-    del evaluation_results_cp['cm']
+    del evaluation_results_cp['confusion_matrix']
 
     model_params = get_model_config().get('model_params', {})
     mlflow_tracker.log_training_metrics(model, evaluation_results_cp, model_params)
