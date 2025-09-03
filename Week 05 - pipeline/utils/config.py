@@ -9,6 +9,8 @@ CONFIG_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)),
     'config.yaml')
 
 
+
+
 def load_config():
     try:
         with open(CONFIG_FILE, 'r') as f:
@@ -19,9 +21,13 @@ def load_config():
         return {}
 
 
+
+
 def get_data_paths():
     config = load_config()
     return config.get('data_paths', {})
+
+
 
 
 def get_columns():
@@ -29,9 +35,13 @@ def get_columns():
     return config.get('columns', {})
 
 
+
+
 def get_missing_values_config():
     config = load_config()
     return config.get('missing_values', {})
+
+
 
 
 def get_outlier_config():
@@ -39,9 +49,13 @@ def get_outlier_config():
     return config.get('outlier_detection', {})
 
 
+
+
 def get_binning_config():
     config = load_config()
     return config.get('feature_binning', {})
+
+
 
 
 def get_encoding_config():
@@ -49,9 +63,13 @@ def get_encoding_config():
     return config.get('feature_encoding', {})
 
 
+
+
 def get_scaling_config():
     config = load_config()
     return config.get('feature_scaling', {})
+
+
 
 
 def get_splitting_config():
@@ -59,9 +77,13 @@ def get_splitting_config():
     return config.get('data_splitting', {})
 
 
+
+
 def get_training_config():
     config = load_config()
     return config.get('training', {})
+
+
 
 
 def get_model_config():
@@ -69,9 +91,13 @@ def get_model_config():
     return config.get('model', {})
 
 
+
+
 def get_evaluation_config():
     config = load_config()
     return config.get('evaluation', {})
+
+
 
 
 def get_deployment_config():
@@ -79,9 +105,13 @@ def get_deployment_config():
     return config.get('deployment', {})
 
 
+
+
 def get_logging_config():
     config = load_config()
     return config.get('logging', {})
+
+
 
 
 def get_environment_config():
@@ -89,9 +119,13 @@ def get_environment_config():
     return config.get('environment', {})
 
 
+
+
 def get_pipeline_config():
     config = load_config()
     return config.get('pipeline', {})
+
+
 
 
 def get_inference_config():
@@ -99,8 +133,15 @@ def get_inference_config():
     return config.get('inference', {})
 
 
+def get_mlflow_config():
+    config = load_config()
+    return config.get('mlflow', {})
+
+
 def get_config() ->Dict[str, Any]:
     return load_config()
+
+
 
 
 def get_data_config() ->Dict[str, Any]:
@@ -108,9 +149,13 @@ def get_data_config() ->Dict[str, Any]:
     return config.get('data', {})
 
 
+
+
 def get_preprocessing_config() ->Dict[str, Any]:
     config = get_config()
     return config.get('preprocessing', {})
+
+
 
 
 def get_selected_model_config() ->Dict[str, Any]:
@@ -124,9 +169,13 @@ def get_selected_model_config() ->Dict[str, Any]:
         }
 
 
+
+
 def get_available_models() ->List[str]:
     training_config = get_training_config()
     return list(training_config.get('model_types', {}).keys())
+
+
 
 
 def update_config(updates: Dict[str, Any]) ->None:
@@ -144,6 +193,8 @@ def update_config(updates: Dict[str, Any]) ->None:
         yaml.dump(config, file, default_flow_style=False)
 
 
+
+
 def create_default_config() ->None:
     config_path = CONFIG_FILE
     if not os.path.exists(config_path):
@@ -158,6 +209,8 @@ def create_default_config() ->None:
         with open(config_path, 'w') as file:
             yaml.dump(default_config, file, default_flow_style=False)
         logger.info(f'Created default configuration file: {config_path}')
+
+
 
 
 create_default_config()

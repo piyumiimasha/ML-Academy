@@ -31,7 +31,7 @@ uvicorn>=0.20.0
 pydantic>=2.0.0,<2.11.2
 
 # Monitoring and Logging (MLflow will be added back later)
-# mlflow>=1.30.0
+mlflow>=1.30.0
 wandb>=0.15.0
 
 # Testing
