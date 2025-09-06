@@ -1,0 +1,51 @@
+{
+  "scaling_columns": [
+    "Balance",
+    "EstimatedSalary"
+  ],
+  "encoding_columns": [
+    "Geography",
+    "Gender"
+  ],
+  "ordinal_mappings": {
+    "CreditScoreBins": {
+      "Poor": 0,
+      "Fair": 1,
+      "Good": 2,
+      "Very Good": 3,
+      "Excellent": 4
+    }
+  },
+  "binning_config": {
+    "credit_score_bins": {
+      "Poor": [
+        300,
+        580
+      ],
+      "Fair": [
+        580,
+        670
+      ],
+      "Good": [
+        670,
+        740
+      ],
+      "Very Good": [
+        740,
+        800
+      ],
+      "Excellent": [
+        800,
+        850
+      ]
+    },
+    "credit_score_mapping": {
+      "Poor": 0,
+      "Fair": 1,
+      "Good": 2,
+      "Very Good": 3,
+      "Excellent": 4
+    }
+  },
+  "spark_version": "4.0.0"
+}
