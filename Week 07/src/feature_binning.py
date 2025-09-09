@@ -3,6 +3,7 @@ Feature binning strategies for both pandas and PySpark DataFrames.
 Students can compare custom binning implementations and learn PySpark's Bucketizer.
 """
 
+
 import logging
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Union
@@ -12,8 +13,11 @@ from pyspark.sql import functions as F
 from pyspark.ml.feature import Bucketizer
 from spark_session import get_or_create_spark_session
 
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+
 
 
 class FeatureBinningStrategy(ABC):
@@ -42,6 +46,8 @@ class FeatureBinningStrategy(ABC):
             DataFrame with binned feature
         """
         pass
+
+
 
 
 class CustomBinningStrategy(FeatureBinningStrategy):
@@ -120,4 +126,29 @@ class CustomBinningStrategy(FeatureBinningStrategy):
         Returns:
             DataFrame with original column replaced by binned version
         """
-        pass
+        bin_column = f'{column}Bins'
+
+
+        case_expr = F.when(F.col(column) == 850, "Excellent")
+
+
+
+
+        for bin_label, bin_range in self.bin_definitions.items():
+            if len(bin_range) == 2:
+                case_expr = case_expr.when(
+                                        (F.col(column) >= bin_range[0]) & F.col(column) <= bin_range[1], 
+                                        bin_label
+                                        )
+            elif len(bin_range) == 1:
+                case_expr = case_expr.when(
+                                        (F.col(column) >= bin_range[0]), 
+                                        bin_label
+                                        )
+
+
+        df_binned = df.withColumn(bin_column, case_expr)
+        df_binned = df_binned.drop(column)
+
+
+        return df_binned

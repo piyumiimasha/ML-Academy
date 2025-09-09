@@ -3,6 +3,7 @@ Feature scaling strategies for PySpark DataFrames.
 Supports MinMaxScaler and StandardScaler transformations.
 """
 
+
 import logging
 from enum import Enum
 from typing import List, Optional, Dict
@@ -13,8 +14,11 @@ from pyspark.ml.feature import MinMaxScaler, StandardScaler, VectorAssembler
 from pyspark.ml import Pipeline
 from spark_session import get_or_create_spark_session
 
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+
 
 
 class FeatureScalingStrategy(ABC):
@@ -40,10 +44,14 @@ class FeatureScalingStrategy(ABC):
         pass
 
 
+
+
 class ScalingType(str, Enum):
     """Enumeration of scaling types."""
     MINMAX = 'minmax'
     STANDARD = 'standard'
+
+
 
 
 class MinMaxScalingStrategy(FeatureScalingStrategy):
@@ -73,7 +81,32 @@ class MinMaxScalingStrategy(FeatureScalingStrategy):
         Returns:
             DataFrame with scaled columns
         """
-        pass
+        df_scaled = df 
+
+
+        for col in columns_to_scale:
+            vector_col = f"{col}_vec"
+            assembler = VectorAssembler(inputCols=[col], cutputCol=vector_col)
+
+
+            scaled_vector_col = f"{col}_scaled_vec"
+            scaler = MinMaxScaler(inputCols=vector_col, cutputCol=scaled_vector_col)
+
+
+            pipeline = Pipeline(stages=[assembler, scaler])
+            pipeline_model = pipeline.fit(df_scaled)
+
+
+            get_value_udf = F.udf(lambda x: float(x[0] if x is not None else None), "double")
+            df_scaled = df_scaled.withColumn(
+                                            col,
+                                            get_value_udf(F.col(scaled_vector_col))
+                                            )
+
+
+        return df_scaled
+
+
 
 
 class StandardScalingStrategy(FeatureScalingStrategy):
@@ -109,4 +142,27 @@ class StandardScalingStrategy(FeatureScalingStrategy):
         Returns:
             DataFrame with scaled columns
         """
-        pass
+        df_scaled = df 
+
+
+        for col in columns_to_scale:
+            vector_col = f"{col}_vec"
+            assembler = VectorAssembler(inputCols=[col], cutputCol=vector_col)
+
+
+            scaled_vector_col = f"{col}_scaled_vec"
+            scaler = StandardScaler(inputCols=vector_col, cutputCol=scaled_vector_col)
+
+
+            pipeline = Pipeline(stages=[assembler, scaler])
+            pipeline_model = pipeline.fit(df_scaled)
+
+
+            get_value_udf = F.udf(lambda x: float(x[0] if x is not None else None), "double")
+            df_scaled = df_scaled.withColumn(
+                                            col,
+                                            get_value_udf(F.col(scaled_vector_col))
+                                            )
+
+
+        return df_scaled

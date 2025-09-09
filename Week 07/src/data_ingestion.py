@@ -6,8 +6,11 @@ import pandas as pd  # Keep pandas import for educational purposes
 from pyspark.sql import DataFrame, SparkSession
 from spark_session import get_or_create_spark_session
 
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+
 
 
 class DataIngestor(ABC):
@@ -36,6 +39,8 @@ class DataIngestor(ABC):
         pass
 
 
+
+
 class DataIngestorCSV(DataIngestor):
     """CSV data ingestion implementation."""
     
@@ -58,28 +63,29 @@ class DataIngestorCSV(DataIngestor):
         try:
             # Default CSV options
             csv_options = {
-                "header": "true",
-                "inferSchema": "true",
-                "ignoreLeadingWhiteSpace": "true",
-                "ignoreTrailingWhiteSpace": "true",
-                "nullValue": "",
-                "nanValue": "NaN",
-                "escape": '"',
-                "quote": '"'
-            }
+                        "header": "true",
+                        "inferSchema": "true",
+                        "ignoreLeadingWhiteSpace": "true",
+                        "ignoreTrailingWhiteSpace": "true",
+                        "nullValue": "",
+                        "nanValue": "NaN",
+                        "escape": '"',
+                        "quote": '"'
+                        }
             csv_options.update(options)
             
             ############### PANDAS CODES ###########################
             # df = pd.read_csv(file_path_or_link)
             
             ############### PYSPARK CODES ###########################
-            # Read CSV file
-            pass
+            df = self.spark.read.options(**csv_options).csv(file_path_or_link)
             
         except Exception as e:
             logger.error(f"✗ Failed to load CSV data from {file_path_or_link}: {str(e)}")
             logger.info(f"{'='*60}\n")
             raise
+
+
 
 
 class DataIngestorExcel(DataIngestor):
@@ -114,12 +120,15 @@ class DataIngestorExcel(DataIngestor):
             # df = pd.read_excel(file_path_or_link)
             
             ############### PYSPARK CODES ###########################
-            pass
+            pandas_df = pd.read_excel(file_path_or_link)
+            df = self.spark.createDataFrame(pandas_df)
             
         except Exception as e:
             logger.error(f"✗ Failed to load Excel data from {file_path_or_link}: {str(e)}")
             logger.info(f"{'='*60}\n")
             raise
+
+
 
 
 class DataIngestorParquet(DataIngestor):
@@ -144,12 +153,14 @@ class DataIngestorParquet(DataIngestor):
         
         try:
             # Read Parquet file(s)
-            pass
+            df = self.spark.read.options(**csv_options).parquet(file_path_or_link)
             
         except Exception as e:
             logger.error(f"✗ Failed to load Parquet data from {file_path_or_link}: {str(e)}")
             logger.info(f"{'='*60}\n")
             raise
+
+
 
 
 class DataIngestorFactory:

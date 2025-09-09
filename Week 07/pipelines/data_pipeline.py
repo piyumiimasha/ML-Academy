@@ -11,12 +11,14 @@ from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql import functions as F
 from pyspark.ml import Pipeline, PipelineModel
 
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 from spark_session import create_spark_session, stop_spark_session
@@ -32,6 +34,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'utils'))
 from config import get_data_paths, get_columns, get_missing_values_config, get_outlier_config, get_binning_config, get_encoding_config, get_scaling_config, get_splitting_config
 from mlflow_utils import MLflowTracker, setup_mlflow_autolog, create_mlflow_run_tags
 import mlflow
+
+
 
 
 def log_stage_metrics(df: DataFrame, stage: str, additional_metrics: Dict = None, spark: SparkSession = None):
@@ -58,6 +62,8 @@ def log_stage_metrics(df: DataFrame, stage: str, additional_metrics: Dict = None
         
     except Exception as e:
         logger.error(f"✗ Failed to log metrics for {stage}: {str(e)}")
+
+
 
 
 def save_processed_data(
@@ -119,6 +125,8 @@ def save_processed_data(
         logger.info("✓ Parquet files saved")
     
     return paths
+
+
 
 
 def data_pipeline(
@@ -421,6 +429,8 @@ def data_pipeline(
     finally:
         # Stop Spark session
         stop_spark_session(spark)
+
+
 
 
 if __name__ == "__main__":

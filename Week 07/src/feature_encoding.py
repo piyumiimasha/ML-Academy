@@ -3,6 +3,7 @@ Feature encoding strategies for PySpark DataFrames.
 Supports nominal encoding (StringIndexer, OneHotEncoder) and ordinal encoding.
 """
 
+
 import logging
 import os
 import json
@@ -15,8 +16,11 @@ from pyspark.ml.feature import StringIndexer, OneHotEncoder, IndexToString
 from pyspark.ml import Pipeline
 from spark_session import get_or_create_spark_session
 
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+
 
 
 class FeatureEncodingStrategy(ABC):
@@ -40,10 +44,14 @@ class FeatureEncodingStrategy(ABC):
         pass
 
 
+
+
 class VariableType(str, Enum):
     """Enumeration of variable types."""
     NOMINAL = 'nominal'
     ORDINAL = 'ordinal'
+
+
 
 
 class NominalEncodingStrategy(FeatureEncodingStrategy):
@@ -81,8 +89,30 @@ class NominalEncodingStrategy(FeatureEncodingStrategy):
         Returns:
             DataFrame with encoded columns
         """
-        pass
-    
+        df_encoded = df
+
+
+        for column in self.nominal_columns:
+            unique_values = df_encoded.select(column).distinct().count() 
+            indexer = StringIndexer(
+                                    inputCol=column,
+                                    outputCol=f"{column}_index"
+                                    )
+            
+            indexer_model = indexer.fit(df_encoded)
+            self.indexer[column] = indexer_model
+
+
+            labels = indexer_model.labels
+            encoder_dict = {label:idx for idx, label in enumerate(labels)}
+            self.encoder_dicts[column] = encoder_dict
+
+
+            df_encoded = indexer_model.transform(df_encoded)
+        
+        return df_encoded
+
+
     def get_encoder_dicts(self) -> Dict[str, Dict[str, int]]:
         """Get the encoder dictionaries for all columns."""
         return self.encoder_dicts
@@ -90,6 +120,8 @@ class NominalEncodingStrategy(FeatureEncodingStrategy):
     def get_indexers(self) -> Dict[str, StringIndexer]:
         """Get the fitted StringIndexer models."""
         return self.indexers
+
+
 
 
 class OrdinalEncodingStrategy(FeatureEncodingStrategy):
@@ -120,4 +152,16 @@ class OrdinalEncodingStrategy(FeatureEncodingStrategy):
         Returns:
             DataFrame with encoded columns
         """
-        pass
+        df_encoded = df
+
+
+        for column, mapping in self.ordinal_mappings.items():
+            mapping_expr = F.when(F.col(column).isNull(), None)
+            for value, code in mapping.items():
+                mapping_expr = mapping_expr.when(F.col(column) == value, code)
+
+
+            df_encoded = df_encoded.withColumn(column, mapping_expr)
+
+
+        return df_encoded
