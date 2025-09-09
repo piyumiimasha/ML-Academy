@@ -6,7 +6,7 @@ scipy>=1.9.0
 
 
 # Distributed Data Processing
-pyspark>=3.5.0
+pyspark==3.5.1
 
 
 
