@@ -1,0 +1,12 @@
+digraph inference_dag {
+	graph [label=inference_dag labelloc=t rankdir=LR]
+	check_inference_prerequisites [color="#000000" fillcolor="#ffefeb" label=check_inference_prerequisites shape=rectangle style="filled,rounded"]
+	run_inference_bash [color="#000000" fillcolor="#f0ede4" label=run_inference_bash shape=rectangle style="filled,rounded"]
+	setup_inference_environment [color="#000000" fillcolor="#ffefeb" label=setup_inference_environment shape=rectangle style="filled,rounded"]
+	validate_inference_outputs [color="#000000" fillcolor="#ffefeb" label=validate_inference_outputs shape=rectangle style="filled,rounded"]
+	wait_for_model [color="#000000" fillcolor="#91818a" label=wait_for_model shape=rectangle style="filled,rounded"]
+	check_inference_prerequisites -> setup_inference_environment
+	run_inference_bash -> validate_inference_outputs
+	setup_inference_environment -> wait_for_model
+	wait_for_model -> run_inference_bash
+}

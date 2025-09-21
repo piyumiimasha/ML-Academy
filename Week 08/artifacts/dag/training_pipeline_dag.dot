@@ -1,0 +1,12 @@
+digraph training_pipeline_dag {
+	graph [label=training_pipeline_dag labelloc=t rankdir=LR]
+	check_training_prerequisites [color="#000000" fillcolor="#ffefeb" label=check_training_prerequisites shape=rectangle style="filled,rounded"]
+	run_training_pipeline_bash [color="#000000" fillcolor="#f0ede4" label=run_training_pipeline_bash shape=rectangle style="filled,rounded"]
+	setup_training_environment [color="#000000" fillcolor="#ffefeb" label=setup_training_environment shape=rectangle style="filled,rounded"]
+	validate_training_outputs [color="#000000" fillcolor="#ffefeb" label=validate_training_outputs shape=rectangle style="filled,rounded"]
+	wait_for_training_data [color="#000000" fillcolor="#91818a" label=wait_for_training_data shape=rectangle style="filled,rounded"]
+	check_training_prerequisites -> setup_training_environment
+	run_training_pipeline_bash -> validate_training_outputs
+	setup_training_environment -> wait_for_training_data
+	wait_for_training_data -> run_training_pipeline_bash
+}

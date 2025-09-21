@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAG Visualizations - PySpark MLlib Customer Churn Prediction</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        .dag-section {
+            margin-bottom: 40px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .dag-title {
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .dag-info {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .dag-info h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+        .dag-info ul {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+        .visualization-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .viz-item {
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            background: #fafafa;
+        }
+        .viz-item img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .download-links {
+            margin-top: 10px;
+        }
+        .download-links a {
+            display: inline-block;
+            margin: 0 5px;
+            padding: 5px 10px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+        .download-links a:hover {
+            background: #2980b9;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 DAG Visualizations</h1>
+        <p class="subtitle">PySpark MLlib Customer Churn Prediction Pipeline</p>
+        
+
+        <div class="dag-section">
+            <h2 class="dag-title">Training Pipeline DAG</h2>
+            
+            <div class="dag-info">
+                <h4>📋 DAG Information</h4>
+                <ul>
+                    <li><strong>Description:</strong> PySpark MLlib Model Training Pipeline</li>
+                    <li><strong>Schedule:</strong> Daily at 1:00 AM (Asia/Colombo)</li>
+                    <li><strong>Tasks:</strong> 5 tasks</li>
+                    <li><strong>Task List:</strong> check_training_prerequisites, setup_training_environment, wait_for_training_data, run_training_pipeline_bash, validate_training_outputs</li>
+                </ul>
+            </div>
+            
+            <div class="visualization-grid">
+                <div class="viz-item">
+                    <h4>🖼️ PNG Visualization</h4>
+                    <img src="training_pipeline_dag.png" alt="training_pipeline_dag DAG Graph" onerror="this.style.display='none'">
+                    <div class="download-links">
+                        <a href="training_pipeline_dag.png" download>Download PNG</a>
+                        <a href="training_pipeline_dag.svg" download>Download SVG</a>
+                        <a href="training_pipeline_dag.pdf" download>Download PDF</a>
+                        <a href="training_pipeline_dag.dot" download>Download DOT</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dag-section">
+            <h2 class="dag-title">Inference DAG</h2>
+            
+            <div class="dag-info">
+                <h4>📋 DAG Information</h4>
+                <ul>
+                    <li><strong>Description:</strong> PySpark MLlib Inference Pipeline - Real-time</li>
+                    <li><strong>Schedule:</strong> Every minute</li>
+                    <li><strong>Tasks:</strong> 5 tasks</li>
+                    <li><strong>Task List:</strong> check_inference_prerequisites, setup_inference_environment, wait_for_model, run_inference_bash, validate_inference_outputs</li>
+                </ul>
+            </div>
+            
+            <div class="visualization-grid">
+                <div class="viz-item">
+                    <h4>🖼️ PNG Visualization</h4>
+                    <img src="inference_dag.png" alt="inference_dag DAG Graph" onerror="this.style.display='none'">
+                    <div class="download-links">
+                        <a href="inference_dag.png" download>Download PNG</a>
+                        <a href="inference_dag.svg" download>Download SVG</a>
+                        <a href="inference_dag.pdf" download>Download PDF</a>
+                        <a href="inference_dag.dot" download>Download DOT</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dag-section">
+            <h2 class="dag-title">Data Pipeline DAG</h2>
+            
+            <div class="dag-info">
+                <h4>📋 DAG Information</h4>
+                <ul>
+                    <li><strong>Description:</strong> PySpark MLlib Data Preprocessing Pipeline</li>
+                    <li><strong>Schedule:</strong> Daily at 1:00 AM (Asia/Colombo)</li>
+                    <li><strong>Tasks:</strong> 4 tasks</li>
+                    <li><strong>Task List:</strong> check_prerequisites, setup_environment, run_data_pipeline_bash, validate_outputs</li>
+                </ul>
+            </div>
+            
+            <div class="visualization-grid">
+                <div class="viz-item">
+                    <h4>🖼️ PNG Visualization</h4>
+                    <img src="data_pipeline_dag.png" alt="data_pipeline_dag DAG Graph" onerror="this.style.display='none'">
+                    <div class="download-links">
+                        <a href="data_pipeline_dag.png" download>Download PNG</a>
+                        <a href="data_pipeline_dag.svg" download>Download SVG</a>
+                        <a href="data_pipeline_dag.pdf" download>Download PDF</a>
+                        <a href="data_pipeline_dag.dot" download>Download DOT</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Generated automatically by the DAG visualization script</p>
+            <p>📊 <strong>Airflow Web UI:</strong> <a href="http://localhost:8080" target="_blank">http://localhost:8080</a></p>
+        </div>
+    </div>
+</body>
+</html>

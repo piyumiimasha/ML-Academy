@@ -1,0 +1,17 @@
+{
+  "prediction": 0.73,
+  "timestamp": "2025-09-14T17:16:04.886398",
+  "input": {
+    "CreditScore": 650,
+    "Geography": "Spain",
+    "Gender": "Male",
+    "Age": 35,
+    "Tenure": 5,
+    "Balance": 50000,
+    "NumOfProducts": 2,
+    "HasCrCard": 1,
+    "IsActiveMember": 1,
+    "EstimatedSalary": 60000
+  },
+  "model_version": "v1.0"
+}
