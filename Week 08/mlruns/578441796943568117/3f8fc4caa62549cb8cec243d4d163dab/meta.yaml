@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/viraj/Zuu/Ml-academy/Week 08/mlruns/578441796943568117/3f8fc4caa62549cb8cec243d4d163dab/artifacts
+end_time: 1759549288794
+entry_point_name: ''
+experiment_id: '578441796943568117'
+lifecycle_stage: active
+run_id: 3f8fc4caa62549cb8cec243d4d163dab
+run_name: data pipeline pyspark | 2025-10-04 09:11:28
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1759549288559
+status: 3
+tags: []
+user_id: viraj

@@ -4,6 +4,8 @@ Provides consistent Spark configuration across all modules.
 """
 
 import logging
+import sys
+import os
 from typing import Optional
 from pyspark.sql import SparkSession
 
@@ -27,6 +29,29 @@ def create_spark_session(
         SparkSession: Configured SparkSession instance
     """
     try:
+        # Set Python executable path for PySpark workers
+        python_executable = sys.executable
+        os.environ['PYSPARK_PYTHON'] = python_executable
+        os.environ['PYSPARK_DRIVER_PYTHON'] = python_executable
+        
+        # Set Hadoop home to suppress Windows warnings (use PySpark's bundled Hadoop)
+        if 'HADOOP_HOME' not in os.environ:
+            # Use PySpark's bundled Hadoop for Windows
+            import pyspark
+            pyspark_path = os.path.dirname(pyspark.__file__)
+            hadoop_path = os.path.join(pyspark_path, 'bin')
+            if os.path.exists(hadoop_path):
+                os.environ['HADOOP_HOME'] = os.path.dirname(hadoop_path)
+            else:
+                # Fallback: disable Hadoop native library
+                os.environ['HADOOP_HOME'] = os.path.dirname(python_executable)
+        
+        # Disable Hadoop native library warnings on Windows
+        os.environ['HADOOP_OPTS'] = '-Djava.library.path='
+        
+        # Log the Python path being used
+        logger.info(f"Using Python executable: {python_executable}")
+        
         # Base configuration for optimal performance
         builder = SparkSession.builder \
             .appName(app_name) \
@@ -42,7 +67,11 @@ def create_spark_session(
             .config("spark.sql.parquet.compression.codec", "snappy") \
             .config("spark.sql.parquet.mergeSchema", "false") \
             .config("spark.sql.parquet.filterPushdown", "true") \
-            .config("spark.sql.csv.parser.columnPruning.enabled", "true")
+            .config("spark.sql.csv.parser.columnPruning.enabled", "true") \
+            .config("spark.pyspark.python", python_executable) \
+            .config("spark.pyspark.driver.python", python_executable) \
+            .config("spark.hadoop.io.compression.codecs", "org.apache.hadoop.io.compress.DefaultCodec,org.apache.hadoop.io.compress.GzipCodec,org.apache.hadoop.io.compress.BZip2Codec") \
+            .config("spark.sql.execution.arrow.maxRecordsPerBatch", "10000")
         
         # Apply additional configuration if provided
         if config_options:

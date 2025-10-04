@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/viraj/Zuu/Ml-academy/Week 08/mlruns/578441796943568117/0a9088b663e04c53b88924e3a591682e/artifacts
+end_time: 1759549167425
+entry_point_name: ''
+experiment_id: '578441796943568117'
+lifecycle_stage: active
+run_id: 0a9088b663e04c53b88924e3a591682e
+run_name: training pipeline | 2025-10-04 09:08:40
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1759549120440
+status: 3
+tags: []
+user_id: viraj
