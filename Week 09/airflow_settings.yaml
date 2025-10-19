@@ -1,0 +1,5 @@
+spark_default:
+  conn_type: spark
+  host: local[*]
+  extra: '{"deploy_mode": "client"}'
+  description: "Local Spark connection for PySpark MLlib pipelines"

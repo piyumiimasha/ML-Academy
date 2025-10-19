@@ -1,0 +1,11 @@
+{
+  "categories": [
+    "Male",
+    "Female"
+  ],
+  "encoding_type": "one_hot",
+  "mappings": {
+    "Male": 0,
+    "Female": 1
+  }
+}

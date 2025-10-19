@@ -1,0 +1,13 @@
+{
+  "categories": [
+    "France",
+    "Germany",
+    "Spain"
+  ],
+  "encoding_type": "one_hot",
+  "mappings": {
+    "France": 0,
+    "Germany": 1,
+    "Spain": 2
+  }
+}
