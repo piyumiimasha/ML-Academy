@@ -1,0 +1,10 @@
+digraph data_pipeline_dag {
+	graph [label=data_pipeline_dag labelloc=t rankdir=LR]
+	check_prerequisites [color="#000000" fillcolor="#ffefeb" label=check_prerequisites shape=rectangle style="filled,rounded"]
+	run_data_pipeline_bash [color="#000000" fillcolor="#f0ede4" label=run_data_pipeline_bash shape=rectangle style="filled,rounded"]
+	setup_environment [color="#000000" fillcolor="#ffefeb" label=setup_environment shape=rectangle style="filled,rounded"]
+	validate_outputs [color="#000000" fillcolor="#ffefeb" label=validate_outputs shape=rectangle style="filled,rounded"]
+	check_prerequisites -> setup_environment
+	run_data_pipeline_bash -> validate_outputs
+	setup_environment -> run_data_pipeline_bash
+}

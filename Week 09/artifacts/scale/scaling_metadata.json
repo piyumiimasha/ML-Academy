@@ -1,0 +1,36 @@
+{
+  "columns_to_scale": [
+    "Balance",
+    "EstimatedSalary",
+    "Age"
+  ],
+  "n_features": 3,
+  "scaling_type": "minmax",
+  "framework": "pyspark",
+  "scaler_params": {
+    "Balance": {
+      "min": [
+        0.0
+      ],
+      "max": [
+        250898.09
+      ]
+    },
+    "EstimatedSalary": {
+      "min": [
+        11.58
+      ],
+      "max": [
+        199992.48
+      ]
+    },
+    "Age": {
+      "min": [
+        18.0
+      ],
+      "max": [
+        92.0
+      ]
+    }
+  }
+}

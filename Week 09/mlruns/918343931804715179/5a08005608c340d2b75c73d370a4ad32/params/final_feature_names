@@ -1,0 +1,1 @@
+['CreditScore', 'Tenure', 'NumOfProducts', 'HasCrCard', 'IsActiveMember', 'Geography_France', 'Geography_Germany', 'Geography_Spain', 'Gender_Male', 'Gender_Female', 'CreditScoreBins', 'Balance', 'EstimatedSalary', 'Age']
